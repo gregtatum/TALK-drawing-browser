@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Drawing in the Browser</title>
+
+		<meta name="description" content="A talk on content strategies for the web.">
+		<meta name="author" content="Greg Tatum">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" a target='_blank' href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/beige.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+		
+		<style>
+			.reveal p {
+				margin: 1.3em 0;
+			}
+			ul.spread-out li {
+				margin: 0.8em 0;
+			}
+			img.overlay-image {
+				position:absolute;
+				top:0;
+				left:0;
+				border:0 !important;
+				box-shadow:none !important;
+			}
+				
+		</style>
+
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					
+					
+					<!-- <canvas id='intro' width='250' height='250' style='
+						max-width:250px;
+						max-height:250px;
+					'></canvas> -->
+					
+					<h1 style='font-size:3em'>Drawing in the Browser</h1>
+					<h3>Canvas, WebGL, SVG, and CSS</h3>
+					
+					<hr/>
+					<p>
+						<small>
+							Greg Tatum &nbsp; / &nbsp;
+							<a target='_blank' href="http://gregtatum.com/">gregtatum.com</a> &nbsp; / &nbsp; 
+							<a target='_blank' href="http://twitter.com/TatumCreative/">@TatumCreative</a>
+						</small>
+					</p>
+				</section>
+				
+				<section>
+					
+					<h2>You want to draw in the browser?</h2>
+					
+					<img class='fragment roll-in' src='images/cake-meme.jpg' />
+					
+				</section>
+				
+				<section>
+					
+					<h2>The State of Things</h2>
+					
+					<p class='fragment roll-in'>Rapid adoption of new drawing tools</p>
+					<p class='fragment roll-in'>HTML5 Whizbang</p>
+					<p class='fragment roll-in'>Remember Flash Sites?</p>
+					
+				</section>
+				
+				<section>
+					
+					<h2>SVG vs. Canvas</h2>
+					
+					<p>Canvas: 2d image</p>
+					<p>SVG: DOM and Event System</p>
+					
+				</section>
+				
+				<section>
+					
+					<h2>Canvas - 2d context</h2>
+					
+					<p>Bitmap image</p>
+					<p>Equivalent to a drawable image element</p>
+					<p>Limited events</p>
+				 	<p>DOM ignorant of what your canvas holds</p>
+					<p>2d context with simple commands</p>
+					<p>Decent performance</p>
+					
+				</section>
+				
+				<section>
+					
+					<h2>SVG - Scalar Vector Graphics</h2>
+					
+					<p>Graphics built on the DOM</p>
+					<p>CSS + XML</p>
+					<p>Full browser event system</p>
+					<p>All DOM interaction carries over</p>
+					<p>Slow with lots of elements and modification</p>
+					
+				</section>
+				
+				<section>
+					
+					<h2>WebGL</h2>
+					
+					<p>Rendered to a canvas</p>
+					<p>2d or 3d</p>
+					<p>Raw performance</p>
+					<p>Graphics card runs compiled shader code</p>
+					<p>Lots of potential complexity</p>
+					
+				</section>
+				
+				
+				<section>
+					
+					<h2>HTML, CSS, &amp; The DOM</h2>
+					
+					<p>Not the first thought for drawing</p>
+					<p>Divs are boxes that hold art</p>
+					<p>CSS transitions</p>
+					<p>Hardware acceleration</p>
+					<p>Example: <a href='http://threejs.org/examples/css3d_molecules.html' target='_blank'>3d molecules</a></p>
+					<p>Example: <a href='http://keithclark.co.uk/labs/css-fps/desktop/' target='_blank'>3d engine</a></p>
+				</section>
+				
+				<section>
+					
+					<h2>Comparing the Technologies</h2>
+					
+				</section>
+				
+				<section>
+					
+					<h2>You Want:</h2>
+					<p>Easy drawing experiments</p>
+					
+				</section>
+								
+				<section>
+					<h2>Canvas 2d</h2>
+					
+					<pre><code data-trim contenteditable>
+var ctx = canvas.getContext();
+
+ctx.fillStyle = "rgb(200,0,0)";
+ctx.fillRect(10, 10, 55, 50);
+					</code></pre>
+					
+					<p>Easy to outgrow and hit limitations</p>
+					
+				</section>
+				
+				<section>
+					
+					<h2>Canvas 2d Demos</h2>
+					
+					<p>Mine: <a href='http://gregtatum.com/poems/recursive/3/' target="_blank">Drawing Colorful Trees</a></p>
+					<p>Mine: <a href='http://gregtatum.com/poems/stochasticity/8/' target="_blank">Webcam Drawing</a></p>
+					<p>Mine: <a href='http://evolvejs.com' target="_blank">EvolveJS</a></p>
+					
+				</section>
+				
+				<section>
+					
+					<h2>You Want:</h2>
+					<p>Data Visualization</p>
+					
+				</section>
+				
+				<section>
+					<h2>SVG with D3.js</h2>
+					
+					<pre><code data-trim contenteditable>
+//Some D3.js code
+
+d3.csv("data.csv", function() { ... });
+
+var pie = d3.layout.pie()
+    .value(function(d) { return d.population; });
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+  .append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+					</code></pre>
+					
+					<p>Gracefully display your data</p>
+				</section>
+				
+				<section>
+					<h2>D3.js Examples</h2>
+					<p><a target="_blank" href='http://bl.ocks.org/mbostock/5731808'>Map Projection</a></p>
+					<p><a target="_blank" href='http://www.nytimes.com/interactive/science/space/keplers-tally-of-planets.html'>Kepler's Planets</a></p>
+					<p><a target="_blank" href='http://www.nytimes.com/interactive/2012/10/29/us/windspeed.html'>Wind Speed</a></p>
+					<p><a target="_blank" href='http://bost.ocks.org/mike/shuffle/'>Shuffle</a></p>
+				</section>
+
+				<section>
+					
+					<h2>You Want:</h2>
+					<p>3d Demos</p>
+					
+				</section>
+				
+				<section>
+					
+					<h2>WebGL with Three.js</h2>
+					<pre><code data-trim contenteditable>
+var scene = new THREE.Scene();
+var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+
+var renderer = new THREE.WebGLRenderer();
+renderer.setSize( window.innerWidth, window.innerHeight );
+document.body.appendChild( renderer.domElement );
+
+var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+var cube = new THREE.Mesh( geometry, material );
+scene.add( cube );
+
+camera.position.z = 5;
+
+renderer.render(scene, camera);
+					</code></pre>
+					
+					<p>Three.js handles the complexity of interacting with WebGL</p>
+					
+				</section>
+				
+				<section>
+					<h2>Three.js Examples</h2>
+					<p>Mine: <a target="_blank" href='http://gregtatum.com/poems/recursive/5/'>Draw 3d Trees</a></p>
+					<p>Mine: <a target="_blank" href='http://gregtatum.com/sandbox/#sineGravityCloud'>Gravity Cloud</a></p>
+					<p>Mine: <a target="_blank" href='http://gregtatum.com/sandbox/#carbonDioxideEarth'>Carbon Dioxide Earth</a></p>
+					<p>Mine: <a target="_blank" href='http://gregtatum.com/poems/polar/'>Polar Space</a></p>
+					<p><a target="_blank" href='http://acko.net/'>Hackery, Math & Design</a></p>
+				</section>
+				
+				<section>
+					
+					<h2>You Want:</h2>
+					<p>A full 3d game engine</p>
+					
+				</section>
+				
+				<section>
+					
+					<h2>Unity3d - 5 (Coming Soon)</h2>
+					<p><img src='images/unity.png' style='border:none; box-shadow:none;' /></p>
+					<p style='font-size:80%'>Write in UnityScript based off of JavaScript</p>
+					<p style='font-size:80%'>Unity Web Player being replaced with WebGL (NPAPI going away)</p>
+					
+				</section>
+				
+				<section>
+					
+					<h2>You Want:</h2>
+					<p>Blazing fast 2d speed</p>
+					
+				</section>
+				
+
+				<section>
+	
+					<h2>2d WebGL with pixi.js</h2>
+					<pre><code data-trim contenteditable>
+var stage = new PIXI.Stage(0x66FF99);
+
+var renderer = new PIXI.WebGLRenderer(400, 300);
+
+requestAnimFrame( animate );
+
+var texture = PIXI.Texture.fromImage("bunny.png");
+
+var bunny = new PIXI.Sprite(texture);
+bunny.position.x = 200;
+bunny.position.y = 150;
+
+stage.addChild(bunny);
+
+function animate() {
+
+    requestAnimFrame( animate );
+    bunny.rotation += 0.1;
+    renderer.render(stage);
+	
+}
+					</code></pre>
+	
+					<p>pixi.js is fast!</p>
+	
+				</section>
+				
+				<section>
+					<h2>pixi.js Examples</h2>
+					<p><a target="_blank" href='http://www.goodboydigital.com/pixijs/bunnymark/'>Bunny Benchmark</a></p>
+					<p>
+						Mine: 
+						<a target="_blank" href='http://node.graphics/'>SVG</a> vs.
+						<a target="_blank" href='http://me/node.graphics/'>PIXI</a>
+					</p>
+					<p><a target="_blank" href='http://adventuretime.cartoonnetwork.co.uk/'>Adventure Time</a></p>
+				</section>
+
+				<section>
+					
+					<h2>You Want:</h2>
+					<p>Easy 2d video game creation</p>
+					
+				</section>
+				
+
+				<section>
+	
+					<h2>Phaser.js Game Engine</h2>
+					<pre><code data-trim contenteditable>
+player = game.add.sprite(32, 32, 'dude');
+game.physics.enable(player, Phaser.Physics.ARCADE);
+
+player.body.bounce.y = 0.2;
+player.body.collideWorldBounds = true;
+player.body.setSize(20, 32, 5, 16);
+
+player.animations.add('left', [0, 1, 2, 3], 10, true);
+player.animations.add('turn', [4], 20, true);
+player.animations.add('right', [5, 6, 7, 8], 10, true);
+
+game.camera.follow(player);
+
+cursors = game.input.keyboard.createCursorKeys();
+jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+					</code></pre>
+	
+					<p>Flash game development is baaaack</p>
+	
+				</section>
+				
+				<section>
+					<h2>Phaser.js Examples</h2>
+					<p><a target="_blank" href='http://examples.phaser.io/_site/view_full.html?d=games&f=starstruck.js&t=starstruck'>Starstruck Example</a></p>
+					<p><a target="_blank" href='http://examples.phaser.io/_site/view_full.html?d=games&f=invaders.js&t=invaders'>Invaders</a></p>
+					<p>Mine: <a target="_blank" href='http://me/revenant/'>Revenant</a></p>
+				</section>
+
+				<section>
+					
+					<h2>You Want:</h2>
+					<p>Interactive resolution independent graphics</p>
+					
+				</section>
+				
+
+				<section>
+	
+					<h2>Snap.svg</h2>
+					<pre><code data-trim contenteditable>
+var s = Snap("#svg");
+
+var bigCircle = s.circle(150, 150, 100);
+
+bigCircle.attr({
+    fill: "#bada55",
+    stroke: "#000",
+    strokeWidth: 5
+});
+
+var smallCircle = s.circle(100, 150, 70);
+
+var discs = s.group(smallCircle, s.circle(200, 150, 70));
+
+discs.attr({
+    fill: "#fff"
+});					</code></pre>
+	
+					<p>Very direct drawing interface. Modern version of <a href='http://raphaeljs.com/'>Raphael</a></p>
+	
+				</section>
+				
+				<section>
+					<h2>Snap.svg Examples</h2>
+					<p><a target="_blank" href='http://snapsvg.io/'>Main Website</a></p>
+					<p><a target="_blank" href='http://snapsvg.io/demos/#game'>Animated game</a></p>
+				</section>
+
+				
+				<section>
+					
+					<p>Keep an eye out for new engines and frameworks</p>
+					
+				</section>
+				
+				<section>
+					
+					<h2>No Silos</h2>
+					
+					<p>Mix, match, and layer</p>
+					<p>Create really powerful combinations</p>
+					<p>Render the DOM on a 3d element</p>
+					<p>Build a 3d engine with CSS only</p>
+					<p>Combine with WebSockets, async calls, etc.</p>
+					
+				</section>
+				
+				<section>
+					
+					<h2>Thank You!</h2>
+					
+				</section>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+		<script src="js/three.min.js"></script>
+		<script src="js/graphic.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
